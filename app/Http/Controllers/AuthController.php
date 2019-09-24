@@ -62,6 +62,19 @@ class AuthController extends Controller
      */
     public function logof(Request $request)
     {
+        $user = Users::where('remember_token', $request->input('api_token'))->first();
+
+        if ( !empty($user) )
+        {
+            $user->status = 0;
+            $user->remember_token = null;
+            $user->save();
+            return response()->json(["status" => "success", "result" => "Logof efetuado com sucesso."]);
+        }
         
+        else
+        {
+            return response()->json(["status" => "error", "result" => "Usuário não Autorizado."], 401);
+        }
     }
 }
