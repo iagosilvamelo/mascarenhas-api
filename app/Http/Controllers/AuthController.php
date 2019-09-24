@@ -39,12 +39,11 @@ class AuthController extends Controller
 
         if ( !empty($user) && Hash::check($request->input('password'), $user->password) )
         {
-            $str = Date('iydsHm') . $user->email;
+            $str = rand(100000, 1000000) . Date('iydsHm') . rand(100000, 1000000) . $user->username . rand(100000, 1000000);
             $apikey = base64_encode( $str );
 
             Users::where('username', $request->input('username'))->update([ 
-                'remember_token' => "$apikey", 
-                'lastlogin' => Date('Y-m-d H:i:s') ,
+                'remember_token' => "$apikey",
                 'status' => 1
             ]);
 

@@ -14,7 +14,4 @@ $router->group(['prefix' => 'User'], function($router) {
     $router->put('/{id}',    "UsersController@edit");
     $router->delete('/{id}', "UsersController@destroy");
 
-    // $router->post('/Login',  "AuthController@login");
-    // $router->post('/Logof',  "AuthController@logof");
-
 });
