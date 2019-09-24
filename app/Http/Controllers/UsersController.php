@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\Users;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -30,17 +30,25 @@ class UserController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return response()->json( ['status' => 'success', 'result' => Users::find($id)] );
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
-        $email    = Users::where('email', $request->get('email'))->count();
         $username = Users::where('username', $request->get('username'))->count();
 
-        if     ( $email    != 0 ) return response()->json(["ERRO" => "Email já cadastrado."]);
-        elseif ( $username != 0 ) return response()->json(["ERRO" => "Username já cadastrado."]);
+        if ( $username != 0 ) return response()->json(["ERRO" => "Username já cadastrado."]);
 
         else 
         {
@@ -49,16 +57,6 @@ class UserController extends Controller
 
             return response()->json( ['status' => 'success', 'result' => $user] );
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return response()->json( ['status' => 'success', 'result' => Users::find($id)] );
     }
 
     /**
@@ -73,14 +71,11 @@ class UserController extends Controller
 
         if ( !empty($user) )
         {
-            $user->username  = $request->input('username');
-            $user->password  = $request->input('password');
-            $user->people_id = $request->input('people_id');
-            $user->type      = $request->input('type');
-            $user->status    = $request->input('status');
+            $user->type   = $request->input('type');
+            $user->status = $request->input('status');
             $user->save();
      
-            return response()->json($user);
+            return response()->json(["status" => "success", "reqult" => $user]);
         }
 
         else return response()->json(["status" => "error", "result" => "Usuário não encontrado."], 400);
