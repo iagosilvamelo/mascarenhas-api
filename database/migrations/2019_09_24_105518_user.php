@@ -14,7 +14,7 @@ class User extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $new) {
-            $new->bigIncrements('ID');
+            $new->bigIncrements('id');
             $new->string('username', 50);
             $new->string('password', 100);
             $new->rememberToken();
