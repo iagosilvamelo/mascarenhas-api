@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\LogUseController;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+
 use App\Http\Models\Users;
+use App\Http\Models\People;
+
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -37,17 +41,30 @@ class AuthController extends Controller
     {
         $user = Users::where('username', $request->input('username'))->first();
 
-        if ( !empty($user) && Hash::check($request->input('password'), $user->password) )
+        //  Usuário logado
+        if ( !empty($user) && $user->online == 1 )
         {
-            $str = rand(100000, 1000000) . Date('iydsHm') . rand(100000, 1000000) . $user->username . rand(100000, 1000000);
+            $login = LogUseController::getLogin($user->id);
+            $msg = 'Usuário logado no IP ' . $login->ip;
+
+            return response()->json(['status' => 'error', 'result' => $msg],401);
+        }
+
+        else if ( !empty($user) && Hash::check($request->input('password'), $user->password) )
+        {
+            $str = rand(10000000, 100000000) . md5( $user->username ) . rand(10000000, 100000000);
             $apikey = base64_encode( $str );
+
+            LogUseController::register($user->id, 'Login');
 
             Users::where('username', $request->input('username'))->update([ 
                 'remember_token' => "$apikey",
-                'status' => 1
+                'online' => 1
             ]);
 
-            return response()->json( ['status' => 'success','api_key' => $apikey] );
+            $people = People::find( $user->people_id );
+
+            return response()->json( ['status' => 'success','api_key' => $apikey, 'user' => $people] );
         }
 
         else
@@ -66,9 +83,12 @@ class AuthController extends Controller
 
         if ( !empty($user) )
         {
-            $user->status = 0;
+            $user->online = 0;
             $user->remember_token = null;
             $user->save();
+
+            LogUseController::register($user->id, 'Logof');
+
             return response()->json(["status" => "success", "result" => "Logof efetuado com sucesso."]);
         }
         

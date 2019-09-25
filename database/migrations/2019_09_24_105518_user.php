@@ -19,8 +19,8 @@ class User extends Migration
             $new->string('password', 100);
             $new->rememberToken();
             $new->integer('people_id');
-            $new->integer('type');
-            $new->char('status');
+            $new->char('online');
+            $new->char('active');
             $new->timestamps();
         });
     }
