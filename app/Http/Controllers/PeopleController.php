@@ -84,6 +84,7 @@ class PeopleController extends Controller
                 $people->numero      = $request->input('numero');
                 $people->complemento = $request->input('complemento');
                 $people->bairro      = $request->input('bairro');
+                $people->cidade      = $request->input('cidade');
                 $people->uf          = $request->input('uf');
                 $people->cep         = $request->input('cep');
                 $people->email       = $request->input('email');

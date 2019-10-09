@@ -21,6 +21,7 @@ class People extends Migration
             $new->string('numero')->nullable();
             $new->string('complemento')->nullable();
             $new->string('bairro')->nullable();
+            $new->string('cidade')->nullable();
             $new->string('uf')->nullable();
             $new->string('cep')->nullable();
             $new->string('email')->nullable();
