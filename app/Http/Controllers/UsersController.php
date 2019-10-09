@@ -71,9 +71,10 @@ class UsersController extends Controller
 
         if ( !empty($user) )
         {
-            $user->type   = $request->input('type');
-            $user->status = $request->input('status');
+            $user->username = $request->input('username');
             $user->save();
+
+            AuthController::make_pwd($user->id, $request->get("password"));
      
             return response()->json(["status" => "success", "reqult" => $user]);
         }
