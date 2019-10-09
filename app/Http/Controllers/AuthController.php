@@ -47,7 +47,7 @@ class AuthController extends Controller
             $login = LogUseController::getLogin($user->id);
             $msg = 'Usuário logado no IP ' . $login->ip;
 
-            return response()->json(['status' => 'error', 'result' => $msg],401);
+            return response()->json(['status' => 'error', 'result' => $msg]);
         }
 
         else if ( !empty($user) && Hash::check($request->input('password'), $user->password) )
@@ -69,7 +69,7 @@ class AuthController extends Controller
 
         else
         {
-            return response()->json(['status' => 'error', 'result' => 'Usuário ou senha incorreto.'],401);
+            return response()->json(['status' => 'error', 'result' => 'Usuário ou senha incorreto.']);
         }
     }
 
