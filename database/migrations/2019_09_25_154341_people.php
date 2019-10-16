@@ -28,6 +28,7 @@ class People extends Migration
             $new->string('fone')->nullable();
             $new->string('celular')->nullable();
             $new->date('nascimento')->nullable();
+            $new->longText('foto')->nullable();
             $new->timestamps();
         });
     }
