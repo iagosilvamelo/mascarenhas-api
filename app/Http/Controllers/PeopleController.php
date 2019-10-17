@@ -24,9 +24,51 @@ class PeopleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json( ['status' => 'success', 'result' => People::all()] );
+        if ( !empty( $request->get('where') ))
+        {
+            $where = $request->get('where');
+            $value = $request->get('value');
+
+            return response()->json( ['status' => 'success', 'result' => People::where($where, $value)->get()] );
+        }
+
+        else if ( !empty( $request->get('like') ))
+        {
+            $where = $request->get('like');
+            $value = $request->get('value');
+
+            return response()->json( ['status' => 'success', 'result' => People::where($where, "LIKE", "%$value%")->get()] );
+        }
+
+        else return response()->json( ['status' => 'success', 'result' => People::all()] ); 
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function paginate(Request $request, $rows)
+    {
+        if ( !empty( $request->get('where') ))
+        {
+            $where = $request->get('where');
+            $value = $request->get('value');
+
+            return response()->json( ['status' => 'success', 'result' => People::where($where, $value)->paginate($rows)] );
+        }
+
+        else if ( !empty( $request->get('like') ))
+        {
+            $where = $request->get('like');
+            $value = $request->get('value');
+
+            return response()->json( ['status' => 'success', 'result' => People::where($where, "LIKE", "%$value%")->paginate($rows)] );
+        }
+
+        else return response()->json( ['status' => 'success', 'result' => People::paginate($rows)] ); 
     }
 
     /**
