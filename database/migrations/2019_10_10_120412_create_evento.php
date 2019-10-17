@@ -17,7 +17,7 @@ class CreateEvento extends Migration
             $table->increments('id');
             $table->string('titulo', 100);
             $table->date('date_ini');
-            $table->date('date_fom');
+            $table->date('date_fim');
             $table->longText('programa')->nullable();
             $table->string('local', 100)->nullable();
             $table->string('tipo', 100)->nullable();
