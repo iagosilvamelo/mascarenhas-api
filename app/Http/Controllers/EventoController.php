@@ -68,9 +68,8 @@ class EventoController extends Controller
         {
             $evento->titulo      = $request->input('titulo');
             $evento->date_ini    = $request->input('date_ini');
-            $evento->date_fom    = $request->input('date_fom');
+            $evento->date_fim    = $request->input('date_fim');
             $evento->programa    = $request->input('programa');
-            $evento->people_id   = $request->input('people_id');
             $evento->local       = $request->input('local');
             $evento->tipo        = $request->input('tipo');
             $evento->endereco    = $request->input('endereco');

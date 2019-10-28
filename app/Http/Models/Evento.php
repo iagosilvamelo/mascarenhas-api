@@ -15,7 +15,7 @@ class Evento extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'titulo', 'date_ini', 'date_fom', 'programa', 'people_id', 'local', 'tipo', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'cep', 'site', 'contato', 'telefone'
+        'id', 'titulo', 'date_ini', 'date_fim', 'programa', 'people_id', 'local', 'tipo', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'cep', 'site', 'contato', 'telefone'
     ];
 
     /**
