@@ -42,7 +42,7 @@ class AuthController extends Controller
         $user = Users::where('username', $request->input('username'))->first();
 
         //  Usuário logado
-        if ( !empty($user) && $user->online == 1 )
+        if ( !empty($user) && $user->online == 3 )
         {
             $login = LogUseController::getLogin($user->id);
             $msg = 'Usuário logado no IP ' . $login->ip;
